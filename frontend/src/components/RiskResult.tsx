@@ -47,22 +47,25 @@ export default function RiskResult() {
 
     // Backend returns: { prediction: 0/1, "confidence score": 0.x }
     const prediction = JSON.parse(storedResult) as {
-      prediction: number;
+      prediction: string;
       'confidence score': number;
     };
 
     setData(parsedData);
+    const predLabel = prediction.prediction.toLowerCase();
 
     // Map numeric prediction → risk level
     // Adjust if your labels are different (e.g. 0=low,1=medium,2=high)
-    const riskLevel: 'low' | 'medium' | 'high' =
-      prediction.prediction === 1 ? 'high' : 'low';
+    let riskLevel: 'low' | 'medium' | 'high';
+      if (predLabel === 'high') riskLevel = 'high';
+      else if (predLabel === 'medium') riskLevel = 'medium';
+      else riskLevel = 'low';
 
-    const confidence = prediction['confidence score'] ?? 0;
+      const confidence = prediction['confidence score'] ?? 0;
 
-    const factors: string[] = [
-      'Model-based risk estimation using vitals and history.',
-    ];
+      const factors: string[] = [
+        'Model-based risk estimation using vitals and history.',
+      ];
 
     const recommendations: string[] =
       riskLevel === 'high'
