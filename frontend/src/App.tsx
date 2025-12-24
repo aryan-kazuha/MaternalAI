@@ -8,6 +8,9 @@ import ModelData from './components/ModelData';
 import Analytics from './components/Analytics';
 import About from './components/About';
 import PregnancyTimeline from './components/PregnancyTimeline';
+import RagChat from "./components/RagChat";
+import RagChatWidget from "./components/RagChatWidget";
+
 function App() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
 
@@ -44,6 +47,9 @@ function App() {
                 </Link>
                 <Link to="/about" className="text-gray-700 hover:text-[#2BB4A0]">
                   About
+                </Link>
+                <Link to="/assistant" className="text-gray-700 hover:text-[#2BB4A0]">
+                  AI Assistant
                 </Link>
               </div>
 
@@ -103,6 +109,13 @@ function App() {
                 >
                   About
                 </Link>
+                <Link
+                  to="/assistant"
+                  className="block py-2 text-gray-700 hover:text-[#2BB4A0]"
+                  onClick={() => setMobileMenuOpen(false)}
+                >
+                  AI Assistant
+                </Link>
               </div>
             </div>
           )}
@@ -117,8 +130,9 @@ function App() {
           <Route path="/analytics" element={<Analytics />} />
           <Route path="/about" element={<About />} />
           <Route path="/timeline" element={<PregnancyTimeline />} />
+          <Route path="/assistant" element={<RagChat />} />
         </Routes>
-
+        <RagChatWidget />
         {/* Footer */}
         <footer className="bg-white mt-16 py-8 border-t">
           <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 text-center text-gray-600">

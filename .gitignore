@@ -2,8 +2,24 @@
 __pycache__/
 *.pyc
 
+.env 
+
 # Frontend
 frontend/node_modules/
 frontend/.env
 frontend/dist/
 frontend/build/
+*.faiss
+*.pkl
+
+# Data
+data.csv
+
+node_modules/
+ 
+# Editor
+.vscode/
+
+# Vectorized data / batches
+batches/
+build_db.py

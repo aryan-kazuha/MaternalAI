@@ -5,3 +5,15 @@ numpy
 scikit-learn
 joblib
 uvicorn
+torch
+transformers
+peft
+bitsandbytes
+langchain-huggingface
+langchain-community
+faiss-cpu
+sentence-transformers
+python-dotenv
+groq
+langchain-groq
+langchain
