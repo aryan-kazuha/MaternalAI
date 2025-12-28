@@ -4,24 +4,19 @@ from fastapi import FastAPI, HTTPException
 from fastapi.middleware.cors import CORSMiddleware
 from pydantic import BaseModel
 from model import predict
-
-# NEW: Import the RAG service from your RAG.py file
 from RAG import rag_service
+from autofill import parse_data
 
-# --- 1. Lifespan Manager ---
-# This loads the RAG index *once* when the app starts.
 @asynccontextmanager
 async def lifespan(app: FastAPI):
-    # Startup: Load the index
     rag_service.load_index()
     yield
-    # Shutdown: (Optional cleanup goes here)
 
 app = FastAPI(lifespan=lifespan)
 
 origins = [
-    "http://localhost:5173",  # Vite default
-    "http://localhost:3000",  # CRA default (keep if needed)
+    "http://localhost:5173",
+    "http://localhost:3000",  
 ]
 
 app.add_middleware(
@@ -32,7 +27,6 @@ app.add_middleware(
     allow_headers=["*"],
 )
 
-# --- 3. Data Models ---
 class InputData(BaseModel):
     features: list[float]
 
@@ -41,6 +35,9 @@ class RAGRequest(BaseModel):
 
 class InputData(BaseModel):
     features : list[float]
+
+class ParseTextRequest(BaseModel):
+    text: str
 
 @app.post("/predict")
 def pred_api(data : InputData):
@@ -57,7 +54,6 @@ async def ask_rag(request: RAGRequest):
     Expects JSON: { "question": "your question here" }
     """
     try:
-        # Call the ask method from RAG.py
         result = rag_service.ask(request.question)
         
         if "error" in result:
@@ -67,3 +63,15 @@ async def ask_rag(request: RAGRequest):
     
     except Exception as e:
         raise HTTPException(status_code=500, detail=str(e))
+    
+@app.post("/parse-text")
+def parse_text(payload: ParseTextRequest):
+    """
+    Input:
+    { "text": "age 32 bmi 26 blood pressure 130 over 85" }
+
+    Output:
+    { "parsed_fields": { ... } }
+    """
+    parsed = parse_data(payload.text)
+    return {"parsed_fields": parsed}

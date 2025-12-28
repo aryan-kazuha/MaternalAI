@@ -96,21 +96,37 @@ export default function RiskAssessment() {
       setIsListening(false);
     };
 
-    recognition.onresult = (event: any) => {
-      const transcript = event.results[0][0].transcript;
+    recognition.onresult = async (event: any) => {
+      const transcript = event.results[0][0].transcript
+        .replace(/\n/g, " ")
+        .replace(/\s+/g, " ")
+        .trim();
+
       console.log("Transcript:", transcript);
 
-      setFormData((prev) => ({
-        ...prev,
-        name: prev.name || transcript,
-      }));
+      try {
+        const res = await fetch("http://localhost:8000/parse-text", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ text: transcript }),
+        });
 
-      sessionStorage.setItem("riskAssessmentSpeechText", transcript);
+        const data = await res.json();
+
+        setFormData((prev) => ({
+          ...prev,
+          ...data.parsed_fields,
+        }));
+
+      } catch (err) {
+        console.error("Speech parsing failed", err);
+      }
     };
 
     recognitionRef.current = recognition;
     recognition.start();
-  };
+
+
   const handleSubmit = async (e: React.FormEvent) => {
   e.preventDefault();
 
