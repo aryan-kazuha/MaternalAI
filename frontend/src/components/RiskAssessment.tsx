@@ -105,7 +105,7 @@ export default function RiskAssessment() {
       console.log("Transcript:", transcript);
 
       try {
-        const res = await fetch("https://maternalai-backend.onrender.com/predict", {
+        const res = await fetch("https://maternalai-backend.onrender.com/parse-text", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ text: transcript }),
@@ -145,7 +145,7 @@ export default function RiskAssessment() {
   ];
 
   try {
-    const res = await fetch('http://localhost:8000/predict', {
+    const res = await fetch('https://maternalai-backend.onrender.com/predict', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ features }),

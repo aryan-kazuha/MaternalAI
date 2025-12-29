@@ -12,7 +12,11 @@ app = FastAPI()
 origins = [
     "http://localhost:5173",
     "http://localhost:3000",
+    "https://maternalai.netlify.app",
+    "https://www.maternalai.netlify.app",
 ]
+
+
 
 app.add_middleware(
     CORSMiddleware,
@@ -21,6 +25,7 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
+
 
 # Schemas 
 class InputData(BaseModel):
