@@ -1,7 +1,7 @@
 import joblib 
 import numpy as np
 
-model_path = "models/model_V1.pkl"
+model_path = "backend/models/model_V1.pkl"
 
 model = joblib.load(model_path)
 

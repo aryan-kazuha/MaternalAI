@@ -1,0 +1,7 @@
+langchain
+faiss-cpu
+langchain-groq
+langchain-huggingface
+peft
+pandas
+numpy
