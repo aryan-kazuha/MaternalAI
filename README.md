@@ -41,16 +41,3 @@ The classification engine was trained and optimized with a primary focus on clin
    User Query -> Embedding Generation -> FAISS Vector Search (20K+ Document Corpus) -> Context Injection -> Fine-Tuned Qwen-3 -> Actionable Response.
 
 ---
-
-## Installation and Setup
-
-### Prerequisites
-* Python 3.9+
-* Local environment capable of running quantized LLMs
-
-### Setup Instructions
-
-1. Clone the repository:
-```bash
-   git clone [https://github.com/yourusername/MaternalAI_backend.git](https://github.com/yourusername/MaternalAI_backend.git)
-   cd MaternalAI_backend
